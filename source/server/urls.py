@@ -16,6 +16,9 @@ Including another URLconf
 from django.conf.urls import url
 from django.contrib import admin
 
+from healthcheck.views import HealthCheckAPIView
+
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
+    url(r'^healthcheck', HealthCheckAPIView.as_view())
 ]

@@ -14,3 +14,4 @@
 - [Parte 6: Criação da rota de healthcheck](https://youtu.be/pzNVfuiEMEw)
 - [Parte 7: Criação da app de arquivo](https://youtu.be/Et0MpuoiVms)
 - [Parte 8: Implementando uma rota para receber o upload de arquivos](https://youtu.be/JBNYHfcY8SI)
+- [Parte 9: Criando o modelo de Arquivo](https://youtu.be/g6jetkHCWIw)

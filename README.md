@@ -15,3 +15,4 @@
 - [Parte 7: Criação da app de arquivo](https://youtu.be/Et0MpuoiVms)
 - [Parte 8: Implementando uma rota para receber o upload de arquivos](https://youtu.be/JBNYHfcY8SI)
 - [Parte 9: Criando o modelo de Arquivo](https://youtu.be/g6jetkHCWIw)
+- [Parte 10: Criando o serializer para o modelo de arquivo com o Django REST Framework](https://youtu.be/rioUfTTf8t0)

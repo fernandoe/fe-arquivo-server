@@ -1,14 +1,18 @@
-from django.core.files.storage import default_storage
 from rest_framework.response import Response
 from rest_framework.views import APIView
+
+from arquivo.serializers import ArquivoSerializer
 
 
 class ArquivoUploadAPIView(APIView):
     def post(self, request, format=None):
-        arquivo = request.FILES.get('file', None)
-        if arquivo is not None:
-            default_storage.save(None, arquivo)
+        serializer = ArquivoSerializer(data=request.FILES)
+        data = {}
+        if serializer.is_valid():
             status_code = 201
+            serializer.save()
+            data = serializer.data
         else:
             status_code = 400
-        return Response(status=status_code)
+            data['errors'] = serializer.errors
+        return Response(data=data, status=status_code)

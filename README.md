@@ -17,3 +17,4 @@
 - [Parte 9: Criando o modelo de Arquivo](https://youtu.be/g6jetkHCWIw)
 - [Parte 10: Criando o serializer para o modelo de arquivo com o Django REST Framework](https://youtu.be/rioUfTTf8t0)
 - [Parte 11: Retornando um JSON com um ModelSerializer na rota de upload de arquivo](https://youtu.be/7Q2AuR_HVdM)
+- [Parte 12: Implementando uma rota que retorna os detalhes de um arquivo no formato JSON](https://youtu.be/5N4VKYw_0Iw)

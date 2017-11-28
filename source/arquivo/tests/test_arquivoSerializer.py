@@ -2,22 +2,18 @@ import mock
 from django.core.files.uploadedfile import SimpleUploadedFile
 from django.test import TestCase
 
-from arquivo.models import Arquivo
 from arquivo.serializers import ArquivoSerializer
+from arquivo.tests.factories import ArquivoFactory
 
 
 class TestArquivoSerializer(TestCase):
-    def __create_arquivo(self, filename='my-filename.txt', content='my content'):
-        suf = SimpleUploadedFile(filename, content.encode())
-        arquivo = Arquivo.objects.create(arquivo=suf)
-        return arquivo
 
     @mock.patch("django.db.models.fields.files.FieldFile.save")
     def setUp(self, mock_fieldfile_save):
         self.data = {
             'arquivo': SimpleUploadedFile('data.txt', 'content data'.encode())
         }
-        self.arquivo = self.__create_arquivo()
+        self.arquivo = ArquivoFactory()
         self.serializer = ArquivoSerializer(instance=self.arquivo)
 
     def test_contains_expected_fields(self):

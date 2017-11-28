@@ -1,9 +1,8 @@
 import mock
-from django.core.files.uploadedfile import SimpleUploadedFile
 from django.core.urlresolvers import reverse
 from django.test import TestCase
 
-from arquivo.models import Arquivo
+from arquivo.tests.factories import ArquivoFactory
 
 
 class TestArquivoDownloadAPIView(TestCase):
@@ -18,13 +17,8 @@ class TestArquivoDownloadAPIView(TestCase):
     def __get_arquivo_url(self, uuid='00000000-0000-0000-0000-000000000000'):
         return reverse('arquivo_download', kwargs={'uuid': uuid})
 
-    def __create_arquivo(self, filename='my-filename.txt', content='my content'):
-        suf = SimpleUploadedFile(filename, content.encode())
-        arquivo = Arquivo.objects.create(arquivo=suf)
-        return arquivo
-
     def test_get_status_code_200(self):
-        self.arquivo = self.__create_arquivo()
+        self.arquivo = ArquivoFactory()
         response = self.client.get(self.__get_arquivo_url(self.arquivo.uuid))
         self.assertEqual(200, response.status_code)
 
@@ -44,22 +38,22 @@ class TestArquivoDownloadAPIView(TestCase):
 
     @mock.patch("django.db.models.fields.files.FieldFile.save")
     def test_get_404_file_not_exist_on_disk(self, mock_fieldfile_save):
-        arquivo = self.__create_arquivo(filename='test_get_404_file_not_exist_on_disk.txt')
+        arquivo = ArquivoFactory(arquivo__filename='test_get_404_file_not_exist_on_disk.txt')
         response = self.client.get(self.__get_arquivo_url(arquivo.uuid))
         self.assertEqual(404, response.status_code)
         mock_fieldfile_save.assert_called_once()
 
     def test_get_success_content_disposition(self):
-        self.arquivo = self.__create_arquivo(filename='test_get_success_invalid_uuid.txt')
+        self.arquivo = ArquivoFactory(arquivo__filename='test_get_success_invalid_uuid.txt')
         response = self.client.get(self.__get_arquivo_url(self.arquivo.uuid))
         self.assertEqual('attachment; filename=test_get_success_invalid_uuid.txt', response.get('Content-Disposition'))
 
     def test_get_success_content_length(self):
-        self.arquivo = self.__create_arquivo(content='abc')
+        self.arquivo = ArquivoFactory(arquivo__data='abc')
         response = self.client.get(self.__get_arquivo_url(self.arquivo.uuid))
         self.assertEqual('3', response.get('Content-Length'))
 
     def test_get_success_content(self):
-        self.arquivo = self.__create_arquivo(content='abcdef')
+        self.arquivo = ArquivoFactory(arquivo__data='abcdef')
         response = self.client.get(self.__get_arquivo_url(self.arquivo.uuid))
         self.assertEqual(b'abcdef', response.getvalue())

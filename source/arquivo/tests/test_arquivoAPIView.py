@@ -1,19 +1,13 @@
 import mock
-from django.core.files.uploadedfile import SimpleUploadedFile
 from django.core.urlresolvers import reverse
 from django.test import TestCase
 
-from arquivo.models import Arquivo
+from arquivo.tests.factories import ArquivoFactory
 
 
 class TestArquivoAPIView(TestCase):
     def __get_arquivo_url(self, uuid='00000000-0000-0000-0000-000000000000'):
         return reverse('arquivo', kwargs={'uuid': uuid})
-
-    def __create_arquivo(self, filename='my-filename.txt', content='my content'):
-        suf = SimpleUploadedFile(filename, content.encode())
-        arquivo = Arquivo.objects.create(arquivo=suf)
-        return arquivo
 
     def test_get_status_code_404(self):
         response = self.client.get(self.__get_arquivo_url())
@@ -27,14 +21,14 @@ class TestArquivoAPIView(TestCase):
 
     @mock.patch("django.db.models.fields.files.FieldFile.save")
     def test_get_status_code_200(self, mock_fieldfile_save):
-        arquivo = self.__create_arquivo()
+        arquivo = ArquivoFactory()
         response = self.client.get(self.__get_arquivo_url(arquivo.uuid))
         self.assertEqual(200, response.status_code)
         mock_fieldfile_save.assert_called_once()
 
     @mock.patch("django.db.models.fields.files.FieldFile.save")
     def test_get_success_result_keys(self, mock_fieldfile_save):
-        arquivo = self.__create_arquivo()
+        arquivo = ArquivoFactory()
         response = self.client.get(self.__get_arquivo_url(arquivo.uuid))
         self.assertCountEqual(response.data.keys(), ['uuid', 'created_at', 'updated_at', 'arquivo'])
         mock_fieldfile_save.assert_called_once()

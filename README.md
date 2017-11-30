@@ -18,3 +18,5 @@
 - [Parte 10: Criando o serializer para o modelo de arquivo com o Django REST Framework](https://youtu.be/rioUfTTf8t0)
 - [Parte 11: Retornando um JSON com um ModelSerializer na rota de upload de arquivo](https://youtu.be/7Q2AuR_HVdM)
 - [Parte 12: Implementando uma rota que retorna os detalhes de um arquivo no formato JSON](https://youtu.be/5N4VKYw_0Iw)
+- [Parte 13: Implementando a rota que baixa um arquivo específico](https://youtu.be/z7ITUFMY62k)
+- [Parte 14: Integrando a biblioteca factory_boy ao projeto](https://youtu.be/_dRBGV53WRA)
